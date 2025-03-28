@@ -272,3 +272,8 @@ window.addEventListener('load', function() {
   document.body.classList.remove('page-transition-out');
   document.body.classList.add('page-transition-in');
 });
+function help()
+{
+  window.location.href = "help.html";
+}
+
