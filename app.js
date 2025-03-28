@@ -39,7 +39,7 @@ const petsData = [
       type: "Собака",
       gender: "Мальчик",
       age: "22 года",
-      mainImage: "https://disk.yandex.ru/i/j2EMp7cfrtarnw",
+      mainImage: "https://i.pinimg.com/originals/de/8e/00/de8e002d14f1cc2a5e1dc63d614e6b54.jpg",
       images: [
           "https://images.unsplash.com/photo-1583511655826-05700d52f4d9",
           "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e"
