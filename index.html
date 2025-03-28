@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Paws Haven - Приют для животных</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary-color: #2e8b57;
+        --secondary-color: #ffd700;
+        --text-color: #333;
+      }
+      /* Добавляем новые стили для секции "О нас" */
+      .mission-section {
+        padding: 5rem 5%;
+        background: #f5f5f5;
+      }
+
+      .mission-title {
+        text-align: center;
+        margin-bottom: 3rem;
+        font-size: 2.5rem;
+        color: var(--primary-color);
+        position: relative;
+      }
+
+      .mission-title::after {
+        content: '';
+        display: block;
+        width: 80px;
+        height: 4px;
+        background: var(--secondary-color);
+        margin: 1rem auto;
+      }
+
+      .mission-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .mission-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.4s ease;
+        border-top: 4px solid var(--primary-color);
+      }
+
+      .mission-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .mission-icon {
+        font-size: 3rem;
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+      }
+
+      .mission-card:hover .mission-icon {
+        color: var(--secondary-color);
+        transform: scale(1.1);
+      }
+
+      .mission-card h3 {
+        margin-bottom: 1rem;
+        color: var(--primary-color);
+      }
+
+      .mission-card p {
+        color: #666;
+        line-height: 1.6;
+      }
+
+      /* Анимация появления карточек */
+      @keyframes cardAppear {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .mission-card:nth-child(1) {
+        animation: cardAppear 0.6s ease-out;
+      }
+      .mission-card:nth-child(2) {
+        animation: cardAppear 0.8s ease-out;
+      }
+      .mission-card:nth-child(3) {
+        animation: cardAppear 1s ease-out;
+      }
+      .mission-card:nth-child(4) {
+        animation: cardAppear 1.2s ease-out;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+      }
+
+      body {
+        background: #f9f9f9;
+        color: var(--text-color);
+      }
+
+      /* Анимации */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideUp {
+        from {
+          transform: translateY(50px);
+        }
+        to {
+          transform: translateY(0);
+        }
+      }
+
+      .header {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+          url('https://images.unsplash.com/photo-1455103493930-a116f655b6c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=1951&q=80');
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        animation: fadeIn 1.5s ease-in;
+      }
+
+      .nav {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 1rem 5%;
+        z-index: 1000;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+      }
+
+      .nav.scrolled {
+        background: rgba(255, 255, 255, 0.98);
+        padding: 0.5rem 5%;
+      }
+
+      .nav-links {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+      }
+
+      .pets-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .pet-card {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+      }
+      .pet-description {
+        margin-bottom: 1rem;
+      }
+      .pet-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .pet-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-bottom: 3px solid var(--primary-color);
+      }
+
+      .pet-info {
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+      }
+
+      .pet-content {
+        flex-grow: 1;
+        margin-bottom: 1rem; /* Расстояние между контентом и кнопкой */
+      }
+      .pet-info h3 {
+        color: var(--primary-color);
+        margin-bottom: 0.5rem;
+      }
+
+      .pet-meta {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+        color: #666;
+        flex-wrap: wrap;
+      }
+
+      .pet-meta span {
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+      }
+      .pet-actions {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2rem;
+        flex-wrap: wrap;
+      }
+
+      .adopt-btn,
+      .back-btn {
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: all 0.3s;
+        text-align: center;
+        min-width: 160px;
+      }
+
+      .adopt-btn {
+        background: var(--primary-color);
+        color: white;
+        border: none;
+      }
+
+      .adopt-btn:hover {
+        background: var(--secondary-color);
+        transform: translateY(-2px);
+      }
+
+      .back-btn {
+        background: white;
+        color: var(--primary-color);
+        border: 2px solid var(--primary-color);
+      }
+
+      .back-btn:hover {
+        background: #f0f0f0;
+        transform: translateY(-2px);
+      }
+      .btn {
+        display: inline-block;
+        background: var(--primary-color);
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        margin-top: auto;
+        transition: background 0.3s;
+        border: none;
+        cursor: pointer;
+        width: fit-content;
+      }
+
+      .btn:hover {
+        background: var(--secondary-color);
+      }
+
+      .pet-profile {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+      }
+
+      .pet-images {
+        padding: 1rem;
+      }
+
+      .main-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+      }
+
+      .pet-gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+      }
+
+      .pet-gallery img {
+        width: 100%;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.3s;
+      }
+
+      .pet-gallery img:hover {
+        transform: scale(1.05);
+      }
+      .nav-links a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        transition: 0.3s;
+      }
+
+      .nav-links a:hover {
+        color: var(--secondary-color);
+      }
+
+      .section {
+        padding: 5rem 5%;
+        animation: slideUp 1s ease-out;
+      }
+
+      .pet-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+      }
+
+      .pet-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: 0.3s;
+        cursor: pointer;
+      }
+
+      .pet-card:hover {
+        transform: translateY(-10px);
+      }
+
+      .pet-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-bottom: 3px solid var(--primary-color);
+      }
+
+      .donate-btn {
+        background: var(--primary-color);
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-size: 1.1rem;
+      }
+
+      .donate-btn:hover {
+        background: var(--secondary-color);
+        color: var(--primary-color);
+      }
+
+      .footer {
+        background: var(--primary-color);
+        color: white;
+        padding: 3rem 5%;
+        text-align: center;
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          flex-direction: column;
+          text-align: center;
+          gap: 1rem;
+        }
+      }
+      .nav-links a.active {
+        font-weight: bold;
+      }
+      /* Анимации переходов между страницами */
+      body {
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      body.page-transition-out {
+        opacity: 0;
+      }
+
+      body.page-transition-in {
+        animation: pageFadeIn 0.3s ease-in-out;
+      }
+
+      @keyframes pageFadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Стиль активной ссылки в навигации */
+      .nav-links a.active {
+        position: relative;
+      }
+
+      .nav-links a.active::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--secondary-color);
+        animation: underlineGrow 0.3s ease-out;
+      }
+
+      @keyframes underlineGrow {
+        from {
+          transform: scaleX(0);
+        }
+        to {
+          transform: scaleX(1);
+        }
+      }
+      .logo {
+        color: #2e8b57; /* Зеленый цвет логотипа */
+        font-weight: bold;
+        font-size: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Навигация -->
+    <nav class="nav">
+      <div class="logo">Добрые сердца</div>
+      <div class="nav-links">
+        <a href="index.html">Главная</a>
+        <a href="#about">О нас</a>
+        <a href="#pets">Питомцы</a>
+        <a href="help.html">Помощь</a>
+        <a href="#contact">Контакты</a>
+      </div>
+    </nav>
+
+    <!-- Главная страница -->
+    <header class="header" id="home">
+      <div class="hero-content">
+        <h1 style="font-size: 3.5rem; margin-bottom: 1rem">
+          Дадим дом каждому
+        </h1>
+        <p style="font-size: 1.2rem; margin-bottom: 2rem">
+          Спасаем животных с 2010 года
+        </p>
+        <button class="donate-btn" onclick="help()">Стать волонтером</button>
+      </div>
+    </header>
+
+    <!-- О нас -->
+    <section class="mission-section" id="about">
+      <h2 class="mission-title">Наши основные миссии</h2>
+
+      <div class="mission-grid">
+        <!-- Миссия 1 -->
+        <div class="mission-card">
+          <div class="mission-icon">
+            <i class="fas fa-heartbeat"></i>
+          </div>
+          <h3>Спасение жизней</h3>
+          <p>
+            Мы спасаем животных с улиц, обеспечиваем им медицинскую помощь,
+            реабилитацию и временный дом.
+          </p>
+        </div>
+
+        <!-- Миссия 2 -->
+        <div class="mission-card">
+          <div class="mission-icon">
+            <i class="fas fa-home"></i>
+          </div>
+          <h3>Поиск семьи</h3>
+          <p>
+            Тщательно подбираем новых хозяев для наших подопечных, чтобы каждый
+            питомец обрёл любящую семью.
+          </p>
+        </div>
+
+        <!-- Миссия 3 -->
+        <div class="mission-card">
+          <div class="mission-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <h3>Просвещение</h3>
+          <p>
+            Проводим образовательные программы о гуманном отношении к животным и
+            ответственном содержании питомцев.
+          </p>
+        </div>
+
+        <!-- Миссия 4 -->
+        <div class="mission-card">
+          <div class="mission-icon">
+            <i class="fas fa-paw"></i>
+          </div>
+          <h3>Стерилизация</h3>
+          <p>
+            Организуем программы по стерилизации бездомных животных для контроля
+            их численности гуманным способом.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Галерея питомцев -->
+    <section class="section" id="pets">
+      <h2 href="#poop" style="text-align: center; margin-bottom: 2rem">
+        Наши подопечные
+      </h2>
+      <div class="container" id="app">
+        <!-- Здесь будет динамически загружаться контент -->
+      </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Контакты</h3>
+          <p>+7 (999) 123-45-67</p>
+          <p>г. Москва, ул. Добрая, 15</p>
+        </div>
+        <div class="social-links" style="margin-top: 2rem">
+          <a href="#"
+            ><i class="fab fa-vk" style="font-size: 1.5rem; margin: 0 1rem"></i
+          ></a>
+          <a href="#"
+            ><i
+              class="fab fa-telegram"
+              style="font-size: 1.5rem; margin: 0 1rem"
+            ></i
+          ></a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Анимация навигации при скролле
+      window.addEventListener('scroll', () => {
+        const nav = document.querySelector('.nav');
+        if (window.scrollY > 50) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      });
+
+      // Плавная прокрутка
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth',
+          });
+        });
+      });
+    </script>
+    <script src="app.js"></script>
+  </body>
+</html>
