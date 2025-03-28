@@ -218,7 +218,7 @@ function initGallery() {
   
   // Обработчик кнопки adoption
   document.querySelector('.adopt-btn')?.addEventListener('click', () => {
-      alert(`Спасибо за ваш интерес к ${pet.name}! Скоро с вами свяжется наш сотрудник.`);
+      alert(`Спасибо за ваш интерес к питомцам! Скоро с вами свяжется наш сотрудник.`);
   });
 }
 
